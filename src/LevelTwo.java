@@ -307,6 +307,20 @@ public class LevelTwo {
 		
 		return result;
 	}
+	
+	public String getResult(String string, String string2) throws SQLException {
+		
+		String result = "";
+		rs = stmt.executeQuery("select class from carevaluation where safety='"+string+"' and persons='"+string2+"'");
+		while(rs.next())
+		{
+		   result=rs.getString(1);
+		} 
+		
+		
+		
+		return result;
+	}
 
 	public double log2(double N) 
     { 

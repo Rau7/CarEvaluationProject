@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 public class LevelOne {
 	
@@ -11,6 +12,7 @@ public class LevelOne {
 	Statement stmt;
 	ResultSet rs;
 	
+	HashMap<String, String> tree;
 	
 	double totalEntry;
 	
@@ -22,9 +24,10 @@ public class LevelOne {
 	double lvg_bootInfoGain;
 	double safetyInfoGain;
 
-	public LevelOne(ConnectionOfDB connection) throws SQLException {
+	public LevelOne(ConnectionOfDB connection, HashMap<String, String> tree2) throws SQLException {
 		
 		this.connection = connection;
+		this.tree = tree2;
 		rs = this.connection.rs;
 		stmt = this.connection.stmt;
 		
@@ -304,6 +307,20 @@ public class LevelOne {
 		} 
 		
 		return totalNumber;
+	}
+	
+	public String getResult(String string1, String string2) throws SQLException {
+		
+		String result = "";
+		rs = stmt.executeQuery("select class from carevaluation where "+string1+" ='"+string2+"'");
+		while(rs.next())
+		{
+		   result=rs.getString(1);
+		} 
+		
+		
+		
+		return result;
 	}
 	
 	

@@ -250,7 +250,7 @@ public class LevelSix {
 		
 		
 		
-		return "["+result+"]";
+		return result;
 	}
 
 }

@@ -1,6 +1,7 @@
+import java.sql.SQLException;
 import java.util.HashMap;
 
-public class LevelSixPrint {
+public class LevelSevenPrint {
 	
 	ConnectionOfDB ct;
 	HashMap<String, String[]> attrs;
@@ -9,21 +10,22 @@ public class LevelSixPrint {
 	int for3 = 0;
 	int for4 = 0;
 	int for5 = 0;
+	int for6 = 0;
 	
-	public LevelSixPrint(ConnectionOfDB connection, HashMap<String, String[]> attrs) {
+	public LevelSevenPrint(ConnectionOfDB connection, HashMap<String, String[]> attrs) {
 		this.ct = connection;
 		this.attrs = attrs;
 	}
 	
-	public HashMap<String, String> printLevelSix(HashMap<String, String> lvl2, HashMap<String, String> lvl3, HashMap<String, String> lvl4, HashMap<String, String> lvl5) {
+	public HashMap<String, String> printLevelSeven(HashMap<String, String> lvl2, HashMap<String, String> lvl3, HashMap<String, String> lvl4, HashMap<String, String> lvl5, HashMap<String, String> lvl6) {
 		HashMap<String,String> levelFourHash = new HashMap();
-		HashMap<String,String> levelSixPrint = new HashMap();
+		HashMap<String,String> levelsevenPrint = new HashMap();
 		
 		HashMap<String,String> lvlthree = lvl3;
 		HashMap<String,String> lvltwo = lvl2;
 		HashMap<String,String> lvlfour = lvl4;
 		HashMap<String,String> lvlfive = lvl5;
-		
+		HashMap<String,String> lvlsix = lvl6;
 				
 				attrs.entrySet().forEach(entry->{
 					if(entry.getKey().equals("safety")) {
@@ -59,16 +61,32 @@ public class LevelSixPrint {
 																				   if(entry5.getKey().equals("lvg_boot")) {
 																					   
 																					   try {
-																						   for (int b = 0; b < entry.getValue().length; b++) {
-																							   LevelSix levelsix;
-																							   levelsix = new LevelSix(ct,entry.getValue()[ctr].toString(),entry2.getValue()[ctr2].toString(),entry3.getValue()[ctr3],entry4.getValue()[ctr4],entry5.getValue()[b]);
+																						   for (int b = 0; b < entry5.getValue().length; b++) {
+																							   int ctr5 = b;
+																							   attrs.entrySet().forEach(entry6->{
+																								   if(entry6.getKey().equals("doors")) {
+																									   
+																									   
+																										   for (int x = 0; x < entry6.getValue().length; x++) {
+																											   LevelSeven levelseven;
+																											   try {
+																												levelseven = new LevelSeven(ct,entry.getValue()[ctr].toString(),entry2.getValue()[ctr2].toString(),entry3.getValue()[ctr3],entry4.getValue()[ctr4],entry5.getValue()[ctr5],entry6.getValue()[x]);
+																											
+																											   
+																											   
+																												
+																													levelFourHash.put("["+entry.getKey()+"-"+entry.getValue()[ctr]+"]+["+entry2.getKey()+"-"+entry2.getValue()[ctr2]+"]+["+entry3.getKey()+"-"+entry3.getValue()[ctr3]+"]+["+entry4.getKey()+"-"+entry4.getValue()[ctr4]+"]+["+entry5.getKey()+"-"+entry5.getValue()[ctr5]+"]+["+entry6.getKey()+"-"+entry6.getValue()[x]+"]", levelseven.getResult(entry.getValue()[ctr].toString(),entry2.getValue()[ctr2].toString(),entry3.getValue()[ctr3],entry4.getValue()[ctr4],entry5.getValue()[ctr5],entry6.getValue()[x]));
+																												} catch (SQLException e) {
+																													// TODO Auto-generated catch block
+																													e.printStackTrace();
+																												}
+																											  
+																										   }
+																								   }
+																										   
+																							   });
 																							   
-																							   if(levelsix.doorsInfoGain == 0 || levelsix.doorsInfoGain == 1) {
-																								   levelFourHash.put("["+entry.getKey()+"-"+entry.getValue()[ctr]+"]+["+entry2.getKey()+"-"+entry2.getValue()[ctr2]+"]+["+entry3.getKey()+"-"+entry3.getValue()[ctr3]+"]+["+entry4.getKey()+"-"+entry4.getValue()[ctr4]+"]+["+entry5.getKey()+"-"+entry5.getValue()[b]+"] doors", levelsix.getResult(entry.getValue()[ctr].toString(),entry2.getValue()[ctr2].toString(),entry3.getValue()[ctr3],entry4.getValue()[ctr4],entry5.getValue()[b]));
-																							   }
-																							   else {
-																								   levelFourHash.put("["+entry.getKey()+"-"+entry.getValue()[ctr]+"]+["+entry2.getKey()+"-"+entry2.getValue()[ctr2]+"]+["+entry3.getKey()+"-"+entry3.getValue()[ctr3]+"]+["+entry4.getKey()+"-"+entry4.getValue()[ctr4]+"]+["+entry5.getKey()+"-"+entry5.getValue()[b]+"] doors", Double.toString(levelsix.doorsInfoGain));
-																							  }
+																							   
 																							   
 																						}
 																						   
@@ -127,6 +145,7 @@ public class LevelSixPrint {
 					}
 					
 				 });
+				
 				
 				HashMap<String,String> filter2 = new HashMap();
 				
@@ -191,15 +210,30 @@ public class LevelSixPrint {
 					}
 				});
 				
+				HashMap<String,String> filter6 = new HashMap();
 				
 				filter5.entrySet().forEach(entry->{
+					for6 = 0;
+					lvlsix.entrySet().forEach(entry2->{
+						String a = entry2.getKey().toString();
+						if(entry.getKey().toString().contains(a)) {
+							for6++;
+						}
+					});
+					if(for6==0) {
+						filter6.put(entry.getKey(), entry.getValue());
+					}
+				});
+				
+				
+				filter6.entrySet().forEach(entry->{
 					if(entry.getValue().toString().contains("acc") || entry.getValue().toString().contains("unacc") || entry.getValue().toString().contains("good") || entry.getValue().toString().contains("vgood") ) {
-						levelSixPrint.put(entry.getKey().toString().substring(0,entry.getKey().toString().lastIndexOf("]")+1), entry.getValue());
+						levelsevenPrint.put(entry.getKey().toString().substring(0,entry.getKey().toString().lastIndexOf("]")+1), entry.getValue());
 				     
 					}
 				 });
 				
-				return levelSixPrint;
+				return levelsevenPrint;
 	}
 
 }
